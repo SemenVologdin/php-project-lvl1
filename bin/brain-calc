@@ -1,0 +1,45 @@
+#!/usr/bin/env php
+<?php
+
+use function cli\line;
+use function cli\prompt;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+line("Welcome to the Brain Games!");
+$strName = prompt("May I have your name?");
+line("Hello, {$strName}");
+line('What is the result of the expression?');
+
+$arOperations = array('+', '-', '*');
+
+for( $i=0; $i<3; $i++ ){
+    $intResult = 0;
+    $strOperation = rand(0, 2);
+    $intFirsValue = rand(0, 100);
+    $intSecondValue = rand(0, 100);
+
+    switch( $arOperations[$strOperation] ){
+        case '+':
+            $intResult = $intFirsValue + $intSecondValue;
+            break;
+        case '-':
+            $intResult = $intFirsValue - $intSecondValue;
+            break;
+        case '*':
+            $intResult = $intFirsValue * $intSecondValue;
+            break;
+    }
+
+    line("Question: {$intFirsValue} {$arOperations[$strOperation]} {$intSecondValue}");
+    $strInputAnswer = prompt("Your answer: ");
+    if( $strInputAnswer != $intResult ){
+        line("'{$strInputAnswer}' is wrong answer ;(. Correct answer was '{$intResult}'.");
+        line("Let's try again, {$strName}!");
+        return;
+    }
+
+    line('Correct!');
+}
+
+line("Congratulations, {$strName}!");
