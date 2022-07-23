@@ -1,0 +1,43 @@
+#!/usr/bin/env php
+<?php
+
+use function cli\line;
+use function cli\prompt;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+function gcd($n, $m) {
+    while(true) {
+        if($n == $m) {
+            return $m;
+        }
+        if($n > $m) {
+            $n -= $m;
+        } else {
+            $m -= $n;
+        }
+    }
+}
+
+line("Welcome to the Brain Games!");
+$strName = prompt("May I have your name?");
+line("Hello, {$strName}");
+line("Find the greatest common divisor of given numbers.");
+
+for( $i=0; $i<3; $i++ ){
+    $intFirsValue = rand(0, 100);
+    $intSecondValue = rand(0, 100);
+
+    $intAnswer = gcd($intFirsValue, $intSecondValue);
+    line("Question: {$intFirsValue} {$intSecondValue}");
+    $strInputAnswer = prompt("Your answer: ");
+    if( $strInputAnswer != $intAnswer ){
+        line("'{$strInputAnswer}' is wrong answer ;(. Correct answer was '{$intAnswer}'.");
+        line("Let's try again, {$strName}!");
+        return;
+    }
+
+    line('Correct!');
+}
+
+line("Congratulations, {$strName}!");
