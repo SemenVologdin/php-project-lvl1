@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+use function cli\line;
+use function cli\prompt;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+line("Welcome to the Brain Games!");
+$strName = prompt("May I have your name?");
+line("Hello, {$strName}");
+line('Answer "yes" if the number is even, otherwise answer "no".');
+
+for( $i=0; $i<3; $i++ ){
+    $intRandomNumber = rand(0, 100);
+    $strIsEven = $intRandomNumber % 2 == 0 ? 'yes' : 'no';
+    line("Question: {$intRandomNumber}");
+    $strInputAnswer = prompt("Your answer: ");
+    if( $strInputAnswer !== $strIsEven ){
+        line("'{$strInputAnswer}' is wrong answer ;(. Correct answer was '{$strIsEven}'.");
+        line("Let's try again, {$strName}!");
+        return;
+    }
+
+    line('Correct!');
+}
+
+line("Congratulations, {$strName}!");

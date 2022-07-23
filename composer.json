@@ -1,8 +1,9 @@
 {
     "name": "hexlet/code",
     "autoload": {
-        "psr-4": {
-            "Hexlet\\Code\\": "src/"
+        "files": ["src/Cli.php"],
+        "psr-1": {
+            "BrainGames\\": "src"
         }
     },
     "authors": [
@@ -11,8 +12,14 @@
             "email": "vologdin.dev@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "wp-cli/php-cli-tools": "^0.11.14"
+    },
     "bin":[
+        "bin/brain-even",
         "bin/brain-games"
-    ]
+    ],
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7"
+    }
 }
