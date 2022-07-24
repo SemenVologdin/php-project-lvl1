@@ -1,0 +1,43 @@
+#!/usr/bin/env php
+<?php
+
+use function cli\line;
+use function cli\prompt;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+line("Welcome to the Brain Games!");
+$strName = prompt("May I have your name?");
+line("Hello, {$strName}");
+line("What number is missing in the progression?");
+
+for( $i=0; $i<3; $i++ ){
+    $intProgressionLength = rand(5,15);
+    $intHiddenPosition = rand( 0, $intProgressionLength - 1 );
+    $intStartNumber = rand(0, 10);
+    $intOffset = rand(1, 5);
+
+    $intNeedNumber = null;
+
+    $arProgression = array();
+    for( $j = $intStartNumber; count($arProgression) < $intProgressionLength; $j += $intOffset ){
+        if( count($arProgression) - 1 == $intHiddenPosition ){
+            $arProgression[] = '..';
+            $intNeedNumber = $j;
+        }else{
+            $arProgression[] = $j;
+        }
+    }
+
+    line("Question: " . implode(' ', $arProgression) );
+    $strInputAnswer = prompt("Your answer: ");
+    if( $strInputAnswer != $intNeedNumber ){
+        line("'{$strInputAnswer}' is wrong answer ;(. Correct answer was '{$intNeedNumber}'.");
+        line("Let's try again, {$strName}!");
+        return;
+    }
+
+    line('Correct!');
+}
+
+line("Congratulations, {$strName}!");
