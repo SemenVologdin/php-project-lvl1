@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+use function cli\line;
+use function cli\prompt;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+line("Welcome to the Brain Games!");
+$strName = prompt("May I have your name?");
+line("Hello, {$strName}");
+line('Answer "yes" if given number is prime. Otherwise answer "no".');
+
+function checkPrimeNumber($intNum): string
+{
+    if ($intNum == 1)
+        return 'no';
+    for ($i = 2; $i <= $intNum/2; $i++)
+    {
+        if ($intNum % $i == 0)
+            return 'no';
+    }
+    return 'yes';
+}
+
+for( $i=0; $i<3; $i++ ){
+    $intNumber = rand(1, 100);
+
+    $strAnswer = checkPrimeNumber($intNumber);
+    line("Question: {$intNumber}");
+    $strInputAnswer = prompt("Your answer: ");
+    if( $strInputAnswer != $strAnswer ){
+        line("'{$strInputAnswer}' is wrong answer ;(. Correct answer was '{$strAnswer}'.");
+        line("Let's try again, {$strName}!");
+        return;
+    }
+
+    line('Correct!');
+}
+
+line("Congratulations, {$strName}!");
